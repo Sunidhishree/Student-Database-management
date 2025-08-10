@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Students - Student Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(to bottom, #213448, #1a2937);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #f0f4ff, #e6efff);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 1px solid #dee2e6;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #213448;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            color: white;
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #f8f9ff, #eef5ff);
+            border: 1px solid #d4dfed;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 35px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .info-card h3 {
+            color: #1565c0;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .info-card ul {
+            color: #0d47a1;
+            margin-bottom: 0;
+        }
+
+        .info-card li {
+            margin-bottom: 8px;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #495057;
+            font-size: 1.1em;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #213448;
+            box-shadow: 0 0 0 0.2rem rgba(33,52,72,0.25);
+            transform: translateY(-1px);
+        }
+
+        input[type="text"]::placeholder {
+            color: #adb5bd;
+            font-style: italic;
+        }
+
+        .input-help {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        button {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .btn-primary {
+            background-color: #213448;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1a2937;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+
+        .view-link {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .view-link a {
+            color: #213448;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .view-link a:hover {
+            color: #1a2937;
+        }
+
+        .flash-messages {
+            margin-bottom: 25px;
+        }
+
+        .alert {
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-info {
+            background-color: #cce7ff;
+            border: 1px solid #b3d9ff;
+            color: #004085;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            button {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Update Student Elective</h1>
+    <div class="subtitle">Modify student elective subject assignments</div>
+
+    <div class="container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="info-card">
+            <h3>Instructions</h3>
+            <ul>
+                <li>Enter the student's USN (University Seat Number)</li>
+                <li>Specify the current elective subject they want to change</li>
+                <li>Select the new elective subject from available options</li>
+                <li>Only elective subjects can be updated through this form</li>
+            </ul>
+        </div>
+
+        <form action="/update" method="POST" class="form-container">
+            <div class="form-group">
+                <label for="usn">Student USN:</label>
+                <input type="text"
+                       id="usn"
+                       name="usn"
+                       placeholder="e.g., 4CSE001, 2ECE002, 2ME034"
+                       required
+                       style="text-transform: uppercase;">
+                <div class="input-help">Enter the USN</div>
+            </div>
+
+            <div class="form-group">
+                <label for="new_subject">New Elective Subject:</label>
+                <input type="text"
+                       id="new_subject"
+                       name="new_subject"
+                       placeholder="e.g., Machine Learning, VLSI Design, Robotics"
+                       required>
+                <div class="input-help">Enter the name of the new elective subject</div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">
+                    Update Elective
+                </button>
+                <a href="/" class="btn-secondary">
+                    Cancel
+                </a>
+            </div>
+        </form>
+
+        <div class="view-link">
+            <a href="/view">
+                View all students to check current subjects
+            </a>
+        </div>
+    </div>
+</body>
+</html>

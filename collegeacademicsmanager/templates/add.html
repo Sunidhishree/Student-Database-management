@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student - Student Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(to bottom, #213448, #1a2937);
+            min-height: 100vh;
+        }
+
+        .container {
+            background: linear-gradient(135deg, #f0f4ff, #e6efff);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #213448;
+            box-shadow: 0 0 0 2px rgba(33,52,72,0.25);
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1e7e34;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+
+        .button-group {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-link {
+            text-decoration: none;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add New Student</h1>
+
+    <div class="container">
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form action="/add" method="POST">
+            <div class="form-group">
+                <label for="name">Student Name *</label>
+                <input type="text" id="name" name="name" required placeholder="Enter full name">
+            </div>
+
+            <div class="form-group">
+                <label for="usn">USN (University Seat Number) *</label>
+                <input type="text" id="usn" name="usn" required placeholder="e.g., 4CSE001">
+                <div class="help-text">USN should be unique for each student</div>
+            </div>
+
+            <div class="form-group">
+                <label for="branch">Branch *</label>
+                <select id="branch" name="branch" required>
+                    <option value="">Select Branch</option>
+                    <option value="CSE">Computer Science Engineering (CSE)</option>
+                    <option value="ECE">Electronics & Communication Engineering (ECE)</option>
+                    <option value="ME">Mechanical Engineering (ME)</option>
+                    <option value="EEE">Electrical & Electronics Engineering (EEE)</option>
+                    <option value="CE">Civil Engineering (CE)</option>
+                    <option value="IE">Industrial Engineering (IE)</option>
+                    <option value="IT">Information Technology (IT)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="semsester">Semester *</label>
+                <select id="semsester" name="semsester" required>
+                    <option value="">Select Semester</option>
+                    <option value="1">1st Semester</option>
+                    <option value="2">2nd Semester</option>
+                    <option value="3">3rd Semester</option>
+                    <option value="4">4th Semester</option>
+                    <option value="5">5th Semester</option>
+                    <option value="6">6th Semester</option>
+                    <option value="7">7th Semester</option>
+                    <option value="8">8th Semester</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cgpa">CGPA *</label>
+                <input type="number" id="cgpa" name="cgpa" step="0.01" min="0" max="10" required placeholder="e.g., 8.75">
+                <div class="help-text">CGPA should be between 0.00 and 10.00</div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit">Add Student</button>
+                <a href="/" class="back-link">
+                    <button type="button" class="btn-secondary">Back to Home</button>
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Search Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(to bottom, #213448, #1a2937);
+            min-height: 100vh;
+        }
+
+        .container {
+            background: linear-gradient(135deg, #f0f4ff, #e6efff);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .student-card {
+            background: linear-gradient(135deg, #f0f4ff, #e6efff);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 20px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .student-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .info-item {
+            padding: 10px;
+            background-color: white;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+            min-height: 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #212529;
+            font-size: 1.1em;
+        }
+
+        .subjects-section {
+            background-color: white;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+            margin-top: auto;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .subject-item {
+            background-color: #e3f2fd;
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid #90caf9;
+            min-height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .no-result {
+            text-align: center;
+            color: #721c24;
+            font-size: 1.2em;
+            padding: 40px;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .back-button {
+            background-color: #213448;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #1a2937;
+        }
+
+        .cgpa-indicator {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .cgpa-high { background-color: #d4edda; color: #155724; }
+        .cgpa-medium { background-color: #fff3cd; color: #856404; }
+        .cgpa-low { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Student Search Result</h1>
+
+    <div class="container">
+        {% if student %}
+            <div class="student-card">
+                <div class="student-info">
+                    <div class="info-item">
+                        <div class="info-label">Name</div>
+                        <div class="info-value">{{ student.name }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">USN</div>
+                        <div class="info-value">{{ student.usn }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Branch</div>
+                        <div class="info-value">{{ student.branch }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Semester</div>
+                        <div class="info-value">{{ student.semester }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">CGPA</div>
+                        <div class="info-value">
+                            {{ student.cgpa }}
+                            {% if student.cgpa >= 8 %}
+                                <span class="cgpa-indicator cgpa-high">Excellent</span>
+                            {% elif student.cgpa >= 6 %}
+                                <span class="cgpa-indicator cgpa-medium">Good</span>
+                            {% else %}
+                                <span class="cgpa-indicator cgpa-low">Needs Improvement</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Credits Earned</div>
+                        <div class="info-value">{{ student.credits_earned }}</div>
+                    </div>
+                </div>
+
+                <div class="subjects-section">
+                    <h3 style="margin-top: 0; color: #495057;">Enrolled Subjects</h3>
+                    <div class="subjects-grid">
+                        <div class="subject-item">{{ student.subject1 }}</div>
+                        <div class="subject-item">{{ student.subject2 }}</div>
+                        <div class="subject-item">{{ student.elective }} (Elective)</div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="no-result">
+                <h2>No Student Found</h2>
+                <p>No student found with the provided USN. Please check the USN and try again.</p>
+            </div>
+        {% endif %}
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/" class="back-button">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

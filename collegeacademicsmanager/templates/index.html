@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(to bottom, #213448, #1a2937);
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        h2 {
+            color: #213448;
+            border-bottom: 2px solid #213448;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .button-card {
+            background: linear-gradient(135deg, #f0f4ff, #e6efff);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .button-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .button-card h3 {
+            margin: 0 0 10px 0;
+            color: #495057;
+        }
+
+        .button-card p {
+            margin: 0 0 15px 0;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .single-center {
+            grid-column: 1 / -1;
+            justify-self: center;
+        }
+
+        .btn-success { background-color: #28a745; }
+        .btn-success:hover { background-color: #1e7e34; }
+
+        .btn-info { background-color: #17a2b8; }
+        .btn-info:hover { background-color: #138496; }
+
+        .btn-warning { background-color: #ffc107; color: #212529; }
+        .btn-warning:hover { background-color: #e0a800; }
+
+        .btn-danger { background-color: #dc3545; }
+        .btn-danger:hover { background-color: #c82333; }
+
+        .btn-secondary { background-color: #6f42c1; }
+        .btn-secondary:hover { background-color: #5a359c; }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+            align-items: end;
+            justify-content: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="range"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 5px 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Student Management System</h1>
+
+    <!-- Main Operations -->
+    <div class="container">
+        <h2>Student Operations</h2>
+        <div class="button-grid">
+            <div class="button-card">
+                <h3>Add Student</h3>
+                <p>Register a new student in the system</p>
+                <a href="/add_form">
+                    <button class="btn-success">Add Student</button>
+                </a>
+            </div>
+
+            <div class="button-card">
+                <h3>View Students</h3>
+                <p>Display all registered students</p>
+                <a href="/view">
+                    <button class="btn-info">View All Students</button>
+                </a>
+            </div>
+
+            <div class="button-card">
+                <h3>Update Student</h3>
+                <p>Update student elective subjects</p>
+                <a href="/update">
+                    <button class="btn-warning">Update Student</button>
+                </a>
+            </div>
+
+            <div class="button-card">
+                <h3>Delete Record</h3>
+                <p>Delete a specific student by USN</p>
+                <form action="/delete" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" name="usn" placeholder="Enter USN" required>
+                        </div>
+                        <button type="submit" class="btn-danger">Delete Record</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search & Analytics -->
+    <div class="container">
+        <h2>Search & Analytics</h2>
+        <div class="button-grid">
+            <div class="button-card">
+                <h3>Find Student</h3>
+                <p>Search for a specific student by USN</p>
+                <form action="/find" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" name="search_usn" placeholder="Enter USN" required>
+                        </div>
+                        <button type="submit" class="btn-info">Find Student</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="button-card">
+                <h3>Average CGPA</h3>
+                <p>View the average CGPA of all students</p>
+                <a href="/average">
+                    <button class="btn-secondary">View Average</button>
+                </a>
+            </div>
+
+            <div class="button-card">
+                <h3>Improvement List</h3>
+                <p>Students with CGPA below 5.0</p>
+                <a href="/improvements">
+                    <button class="btn-warning">View List</button>
+                </a>
+            </div>
+
+            <div class="button-card single-center">
+                <h3>Search Nearby</h3>
+                <p>Find stationery shops within a geographic range</p>
+                <form action="/searchnearby" method="POST">
+                    <div class="form-group">
+                        <label for="latitude">Latitude (12.0 - 13.5):</label>
+                        <input type="range" id="latitude" name="latitude" min="12" max="13.5" step="0.1" value="12.8" oninput="document.getElementById('lat_value').textContent = this.value">
+                        <span id="lat_value">12.8</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="longitude">Longitude (77.0 - 78.5):</label>
+                        <input type="range" id="longitude" name="longitude" min="77" max="78.5" step="0.1" value="77.8" oninput="document.getElementById('lng_value').textContent = this.value">
+                        <span id="lng_value">77.8</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="range">Range (meters):</label>
+                        <input type="number" id="range" name="range" min="100" max="50000" value="1000" placeholder="1000">
+                    </div>
+                    <button type="submit" class="btn-info">Search Nearby</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flash Messages Display -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container">
+                <h2>Messages</h2>
+                {% for category, message in messages %}
+                    <div style="padding: 10px; margin: 10px 0; border-radius: 4px;
+                                {% if category == 'error' %}background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24;
+                                {% else %}background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724;{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Nearby Search Results -->
+    {% if places %}
+        <div class="container">
+            <h2>Nearby Stationery Shops Found</h2>
+            <p>Found {{ places|length }} stationery shop(s) within the specified range:</p>
+            {% for place in places %}
+                <div style="background-color: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 4px; border: 1px solid #dee2e6;">
+                    <h4>{{ place.name }}</h4>
+                    <p>Coordinates: {{ place.location.coordinates[0] }}, {{ place.location.coordinates[1] }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</body>
+</html>
